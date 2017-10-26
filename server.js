@@ -1,9 +1,13 @@
 /**
- * @Author: michael
+ * @Author: MichaelChen <michaelchen>
  * @Date:   2017-10-26T16:39:43+08:00
- * @Last modified by:   michaelchen
- * @Last modified time: 2017-10-26T17:26:31+08:00
+ * @Email:  teacherincafe@163.com
+ * @Project: one_server
+ * @Filename: server.js
+ * @Last modified by:   mymac
+ * @Last modified time: 2017-10-26T18:23:41+08:00
  */
+
  //mongoose对数据库基本操作，够用了
  // http://www.jianshu.com/p/2f54b90efe15
 
