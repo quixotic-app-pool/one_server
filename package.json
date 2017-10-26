@@ -1,0 +1,11 @@
+{
+  "name": "one_server",
+  "version": "1.0.0",
+  "description": "Michael's first mini-program",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
