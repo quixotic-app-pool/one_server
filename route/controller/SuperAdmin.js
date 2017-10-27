@@ -5,54 +5,28 @@
  * @Project: one_server
  * @Filename: SuperAdmin.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-10-27T11:30:19+08:00
+ * @Last modified time: 2017-10-27T18:01:09+08:00
  */
+ var UserModel = require("../../models/User")
 
- function comntdelbyadmin(req, res) {
-   res.send('comntdelbyadmin');
- }
+ function updateadmin(req, res) {
+   var data = req.body;
+   UserModel.findByIdAndUpdate( ObjectId(data.uid), { isAdmin: data.isAdmin }, {
+     if (err){
+       res.send("Sorry, this operation failed, please try again.")
+     } else {
+       if(data.isAdmin){
+          res.send('Great, this user has been granted as Admin.')
+       } else {
+          res.send('Oops, this user has been removed from Admin team.')
+       }
 
- function blogdelbyadmin(req, res) {
-   res.send('blogdelbyadmin');
- }
-
- function banuserbyadmin(req, res) {
-   res.send('banuserbyadmin');
- }
-
- function cfdelcomnt(req, res) {
-   res.send('cfdelcomnt');
- }
-
- function recovercomnt(req, res) {
-   res.send('recovercomnt');
- }
-
- function cfdelblog(req, res) {
-   res.send('cfdelblog');
- }
-
- function recoverblog(req, res) {
-   res.send('recoverblog');
- }
-
- function assignadmin(req, res) {
-   res.send('assignadmin');
- }
-
- function removeAdmin(req, res) {
-   res.send('removeAdmin');
+     }
+   })
  }
 
 
  module.exports = {
-   comntdelbyadmin,
-   blogdelbyadmin,
-   banuserbyadmin,
-   cfdelcomnt,
-   recovercomnt,
-   cfdelblog,
-   recoverblog,
    assignadmin,
    removeAdmin
  }

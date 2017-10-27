@@ -5,44 +5,88 @@
  * @Project: one_server
  * @Filename: Admin.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-10-27T12:18:58+08:00
+ * @Last modified time: 2017-10-27T17:05:52+08:00
  */
+ var CommentModel = require('../models/Comment');
+ var BlogModel = require('../models/Blog');
+ var UserModel = require('../models/User');
 
- function delcomment(req, res) {
-   res.send('delcomment');
+
+ function delcommentbyadmin(req, res) {
+   var data = req.body;
+   if(data.user.isAdmin | data.user.isSuperAdmin) {
+      CommentModel.findOne({_id: ObjectId(data.commentId)}, function(err, doc){
+        if(err) {
+          res.send("Sorry, this operation failed, please try again.")
+        } else {
+          res.send("Great, this comment has been successfully deleted.")
+        }
+      })
+   } else {
+     res.send("Sorry, you don't have right to take this action.")
+   }
  }
 
- function delblog(req, res) {
-   res.send('delblog');
+ function delblogbyadmin(req, res) {
+   var data = req.body;
+   if(data.user.isAdmin | data.user.isSuperAdmin) {
+      BlogModel.findOne({_id: ObjectId(data.blogId)}, function(err, doc){
+        if(err) {
+          res.send("Sorry, this operation failed, please try again.")
+        } else {
+          res.send("Great, this blog has been successfully deleted.")
+        }
+      })
+   } else {
+     res.send("Sorry, you don't have right to take this action.")
+   }
  }
 
  function banuser(req, res) {
-   res.send('banuser');
+   var data = req.body;
+   if(data.user.isAdmin | data.user.isSuperAdmin) {
+      UserModel.findOneAndUpdate({_id: ObjectId(data.user.uid)}, {isBanned: true}, function(err, doc){
+        if(err) {
+          res.send("Sorry, this operation failed, please try again.")
+        } else {
+          res.send("Great, this user has been successfully banned.")
+        }
+      })
+   } else {
+     res.send("Sorry, you don't have right to take this action.")
+   }
  }
 
  function freeuser(req, res) {
-   res.send('freeuser');
+   var data = req.body;
+   if(data.user.isAdmin | data.user.isSuperAdmin) {
+      UserModel.findOneAndUpdate({_id: ObjectId(data.user.uid)}, {isBanned: false}, function(err, doc){
+        if(err) {
+          res.send("Sorry, this operation failed, please try again.")
+        } else {
+          res.send("Great, this user has been free now.")
+        }
+      })
+   } else {
+     res.send("Sorry, you don't have right to take this action.")
+   }
  }
 
- function comntdelbyme(req, res) {
-   res.send('comntdelbyme');
+ function unrepblog(req, res) {
+   var data = req.body;
+   BlogModel.findOneAndUpdate({_id: ObjectId(ata.blogId)}, {isReported: false}, {
+     if (err){
+       res.send("Sorry, this operation failed, please try again.")
+     } else {
+       res.send('Great, this blog has been unreported.')
+     }
+   })
  }
-
- function blogdelbyme(req, res) {
-   res.send('blogdelbyme');
- }
-
- function userbanbyme(req, res) {
-   res.send('userbanbyme');
- }
-
 
  module.exports = {
-   delcomment,
-   delblog,
+   delcommentbyadmin,
+   delblogbyadmin,
    banuser,
    freeuser,
-   comntdelbyme,
-   blogdelbyme,
-   userbanbyme
+   unrepblog
  }

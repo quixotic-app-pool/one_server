@@ -5,7 +5,7 @@
  * @Project: one_server
  * @Filename: User.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-10-27T10:15:18+08:00
+ * @Last modified time: 2017-10-27T16:17:40+08:00
  */
 
 
@@ -13,26 +13,13 @@
  var Schema = mongoose.Schema;
 
  var userSchema = new Schema({
-     isSuperAdmin: Boolean,
-     isAdmin: Boolean,
-     isBanned: Boolean,
-     uid: String,
+     isSuperAdmin: { type: Boolean, default: false },
+     isAdmin: { type: Boolean, default: false },
+     isBanned: { type: Boolean, default: false },
      nickName: String,
      avatar: String,
-     blogs: String[],
-     commentToOthers: String[],
-     notification: [
-       type: String,
-       blog_id: String,
-       comment_id: String,
-       from_user: {
-         uid: Number,
-         avatar: String,
-         anonymous: Boolean
-       },
-       comment_content: String,
-       like: Number,
-       comment_like: Number
-     ]
+     blogs: [{ type: ObjectId, ref: 'blogs' }],
+     commentToOthers: [{ type: ObjectId, ref: 'comments' }],
+     notification: [{ type: ObjectId, ref: 'notifications' }]
  })
  module.exports = mongoose.model('User', userSchema);

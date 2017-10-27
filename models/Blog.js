@@ -5,49 +5,39 @@
  * @Project: one_server
  * @Filename: Blog.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-10-27T12:07:30+08:00
+ * @Last modified time: 2017-10-27T17:04:34+08:00
  */
-
-
  var mongoose = require('mongoose');
  var Schema = mongoose.Schema;
 
  var blogSchema = new Schema({
-     blog_id: String,
-     author_uid: String,
-     anonymous: Boolean,
+     uid: { type: ObjectId, ref: 'users' },
+     anonymous: { type: Boolean, default: true },
      content: {
        text: String,
-       iamges: String[]
+       iamges: [String]
      },
-     likeNum: Number,
-     dislikeNum: Number,
-     comment: {
-       commentNum: Number,
-       commentList: String[],
+     meta: {
+       likeNum: { type: Number, default: 0 },
+       comment: [{
+         type: ObjectId,
+         ref: 'comments'
+       }]
      },
-     isReported: {
-       valid: Boolean,
-       byUid: String,
-     },
-     isDeleted: {
-       valid: Boolean,
-       byUid: String
-     },
-     isElapsed: {
-       valid: Boolean,
-       elapseTime: Number
-     },
+     isReported: { type: Boolean, default: false },
      created_info: {
-       time: Date,
-       evice: String,
+       time: {
+    		 type   : Date,
+    		 default: Date.now(),
+    	 },
+       device: { type: String, default: null },
        location: {
-         latitude: Number,
-         longitude: Number,
-         locationName: String
+         latitude: { type: Number, default: null },
+         longitude: { type: Number, default: null },
+         locationName: { type: String, default: '' }
        }
      },
-     movedToTop: Boolean
+     movedToTop: { type: Boolean, default: false}
  })
 
  module.exports = mongoose.model('Blog', blogSchema);

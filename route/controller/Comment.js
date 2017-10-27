@@ -5,28 +5,60 @@
  * @Project: one_server
  * @Filename: Comment.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-10-27T11:22:15+08:00
+ * @Last modified time: 2017-10-27T17:31:21+08:00
  */
+var CommentModel = require("../../models/Comment")
 
  function addcomment(req, res) {
-   res.send('addcomment');
+   var data = req.body;
+   var commentEntity = new CommentModel({
+       from_uid: data.from_uid,
+       to_uid: data.todo_uid,
+       anonymous: data.anonymous,
+       created_info: data.created_info
+      }
+   })
+   commentEntity.save(function(err, docs){
+       if(err) console.log(err);
+       console.log('保存成功：' + docs);
+   })
+   var option= {
+     limit: 10
+   }
+   CommentModel.find({}, option, function(err, comments) {
+   // if there is an error retrieving, send the error otherwise send data
+       if (err){
+         res.send("Sorry, this operation failed, please try again.")
+       } else {
+         res.json(comments);
+       }
+    })
  }
 
  function delcomment(req, res) {
-   res.send('delcomment');
- }
-
- function repcomment(req, res) {
-   res.send('repcomment');
+   var data = req.body;
+   CommentModel.findByIdAndRemove( ObjectId(data.commentId), {
+     if (err){
+       res.send("Sorry, this operation failed, please try again.")
+     } else {
+       res.send('Great, this comment has been successfully deleted.')
+     }
+   })
  }
 
  function updcommentlike(req, res) {
-   res.send('updcommentlike');
+   var data = req.body;
+   CommentModel.findByIdAndUpdate( ObjectId(data.commentId), { $inc: { "meta.likeNum": data.like }}, {
+     if (err){
+       res.send("Sorry, this operation failed, please try again.")
+     } else {
+       res.send('Great, this comment likeNum has been updated.')
+     }
+   })
  }
 
  module.exports = {
    addcomment,
    delcomment,
-   repcomment,
    updcommentlike
  }

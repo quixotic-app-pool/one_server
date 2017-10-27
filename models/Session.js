@@ -5,7 +5,7 @@
  * @Project: one_server
  * @Filename: Session.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-10-26T18:24:08+08:00
+ * @Last modified time: 2017-10-27T16:15:14+08:00
  */
 
  var mongoose = require('mongoose');
@@ -14,6 +14,6 @@
  var sessionSchema = new Schema({
      _session: String,
      openId: String,
-     uid: String
+     uid: { type: ObjectId, ref: 'users' }
  })
  module.exports = mongoose.model('Session', sessionSchema);
