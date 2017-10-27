@@ -5,7 +5,7 @@
  * @Project: one_server
  * @Filename: User.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-10-26T18:24:12+08:00
+ * @Last modified time: 2017-10-27T10:15:18+08:00
  */
 
 
@@ -13,7 +13,7 @@
  var Schema = mongoose.Schema;
 
  var userSchema = new Schema({
-     isBoss: Boolean,
+     isSuperAdmin: Boolean,
      isAdmin: Boolean,
      isBanned: Boolean,
      uid: String,

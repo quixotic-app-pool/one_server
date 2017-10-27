@@ -5,10 +5,8 @@
  * @Project: one_server
  * @Filename: Comment.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-10-26T18:24:04+08:00
+ * @Last modified time: 2017-10-27T12:07:15+08:00
  */
-
-
  var mongoose = require('mongoose');
  var Schema = mongoose.Schema;
 
@@ -17,13 +15,6 @@
      from_uid: String,
      to_uid: String,
      anonymous: Boolean,
-     created_time: Date,
-     created_device: String,
-     created_location: {
-       latitude: Number,
-       longitude: Number,
-       locationName: String
-     },
      likeNum: Number,
      dislikeNum: Number,
      isReported: {
@@ -33,6 +24,15 @@
      isDeleted: {
        valid: Boolean,
        byUid: String
+     },
+     created_info: {
+       time: Date,
+       evice: String,
+       location: {
+         latitude: Number,
+         longitude: Number,
+         locationName: String
+       }
      }
  })
  module.exports = mongoose.model('Comment', commentSchema);

@@ -5,7 +5,7 @@
  * @Project: one_server
  * @Filename: Blog.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-10-26T18:23:56+08:00
+ * @Last modified time: 2017-10-27T12:07:30+08:00
  */
 
 
@@ -14,24 +14,17 @@
 
  var blogSchema = new Schema({
      blog_id: String,
-     author: {
-       uid: String,
-       nickName: String,
-       avatar: String
-     },
+     author_uid: String,
      anonymous: Boolean,
-     content: String,
-     iamges: String[],
-     commentNum: Number,
+     content: {
+       text: String,
+       iamges: String[]
+     },
      likeNum: Number,
      dislikeNum: Number,
-     comments: String[],
-     created_time: Date,
-     created_device: String,
-     created_location: {
-       latitude: Number,
-       longitude: Number,
-       locationName: String
+     comment: {
+       commentNum: Number,
+       commentList: String[],
      },
      isReported: {
        valid: Boolean,
@@ -40,10 +33,19 @@
      isDeleted: {
        valid: Boolean,
        byUid: String
-     }
+     },
      isElapsed: {
        valid: Boolean,
        elapseTime: Number
+     },
+     created_info: {
+       time: Date,
+       evice: String,
+       location: {
+         latitude: Number,
+         longitude: Number,
+         locationName: String
+       }
      },
      movedToTop: Boolean
  })

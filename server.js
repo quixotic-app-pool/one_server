@@ -5,7 +5,7 @@
  * @Project: one_server
  * @Filename: server.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-10-26T18:23:41+08:00
+ * @Last modified time: 2017-10-27T10:22:43+08:00
  */
 
  //mongoose对数据库基本操作，够用了
@@ -15,7 +15,16 @@
  var mongoose = require('mongoose');
  var app      = express();
  var database = require('./config/Database');
+ // 使用body-parser解析post请求的参数，如果没有，req.body为undefined。
  var bodyParser = require('body-parser');         // pull information from HTML POST (express4)
+ var route = require('./route/Route');
+
+ //Routes
+ app.use(route);
+
+
+ // cors 解决跨域, wx-audio 有跨域example
+ var cors = require('cors');
 
  const session = require('express-session');
  const passport = require('./config/passport');
@@ -68,134 +77,134 @@
 
  // init();
 
- app.get('/', function(req, res){
-   res.send('server is up and running!')
- })
- app.get('/api/article', function(req, res) {
-    // use mongoose to get all todos in the database
-    ArticleModel.find(function(err, article) {
-    // if there is an error retrieving, send the error otherwise send data
-    if (err){
-      res.send(err)
-    } else {
-      res.json(article);
-    }
-    });
-   });
-
-
- app.get('/api/blog', function(req, res) {
-    // use mongoose to get all todos in the database
-
-    var blogEntity = new BlogModel({
-    title:  "other",
-    author: "L",
-    body:   "Documents are instances of out model. Creating them and saving to the database is easy",
-    comments: [{ body: "It's very cool! Thanks a lot!", date: "2014.07.28" }],
-    hidden: false,
-    meta: {
-        votes: 100,
-        favs:  99
-      }
-    })
-    blogEntity.save(function(err, docs){
-        if(err) console.log(err);
-        console.log('保存成功：' + docs);
-    })
-
-    BlogModel.find(function(err, blog) {
-    // if there is an error retrieving, send the error otherwise send data
-    if (err){
-      res.send(err)
-    } else {
-      res.json(blog);
-    }
-    });
-   });
-
-
- //同时插入多条
-   app.get('/api/mutipleblogs', function(req, res) {
-      // use mongoose to get all todos in the database
-
-      BlogModel.insertMany([
-       {title: "mongoose1", author: "L"},
-       {title: "mongoose2", author: "L"}
-       ], function(err, docs){
-           if(err) console.log(err);
-           console.log('保存成功：' + docs);
-         });
-
-      BlogModel.find(function(err, blog) {
-      // if there is an error retrieving, send the error otherwise send data
-      if (err){
-        res.send(err)
-      } else {
-        res.json(blog);
-      }
-      });
+  app.get('/', function(req, res){
+    res.send('server is up and running!')
+  })
+  app.get('/api/article', function(req, res) {
+     // use mongoose to get all todos in the database
+     ArticleModel.find(function(err, article) {
+     // if there is an error retrieving, send the error otherwise send data
+     if (err){
+       res.send(err)
+     } else {
+       res.json(article);
+     }
      });
+    });
 
- //查
- app.get('/api/findblogs', function(req, res) {
-    // use mongoose to get all todos in the database
 
-    BlogModel.find({title: "Mongoose", 'meta.votes': 100}, {title: 1, 'meta.favs': 1, 'comments.body': 1}, function(err, docs){
-       if(err) console.log(err);
-       console.log('查询结果：' + docs);
-       res.json(docs);
+  app.get('/api/blog', function(req, res) {
+     // use mongoose to get all todos in the database
+
+     var blogEntity = new BlogModel({
+     title:  "other",
+     author: "L",
+     body:   "Documents are instances of out model. Creating them and saving to the database is easy",
+     comments: [{ body: "It's very cool! Thanks a lot!", date: "2014.07.28" }],
+     hidden: false,
+     meta: {
+         votes: 100,
+         favs:  99
+       }
      })
-   });
-
- //查找并只返回第一个查询记录。
-   app.get('/api/findoneblog', function(req, res) {
-      // use mongoose to get all todos in the database
-
-      BlogModel.findOne({title: "Mongoose", 'meta.votes': 100}, {title: 1, 'meta.favs': 1, 'comments.body': 1}, function(err, docs){
+     blogEntity.save(function(err, docs){
          if(err) console.log(err);
-         console.log('查询结果：' + docs);
-         res.json(docs);
-       })
+         console.log('保存成功：' + docs);
+     })
+
+     BlogModel.find(function(err, blog) {
+     // if there is an error retrieving, send the error otherwise send data
+     if (err){
+       res.send(err)
+     } else {
+       res.json(blog);
+     }
      });
-
- //查找并只返回第一个查询记录。
- // app.get('/api/findoneblog', function(req, res) {
- //    // use mongoose to get all todos in the database
- //
- //    BlogModel.findById(id, function(err, docs){
- //       if(err) console.log(err);
- //       console.log('查询结果：' + docs);
- //       res.json(docs);
- //     })
- //   });
-
- //更新原来词条
- app.get('/api/updateblog', function(req, res) {
-   BlogModel.update({title: "Mongoose"}, {author: "L"}, {multi: true}, function(err, docs){
-       if(err) console.log(err);
-       console.log('更改成功：' + docs);
-       res.json(docs);
-   })
- });
+    });
 
 
- //删除o开头的title的词条
- app.get('/api/deleteblog', function(req, res) {
-   BlogModel.remove({title: /^o/}, function(err, docs){
-       if(err) console.log(err);
-       console.log('更改成功：' + docs);
-       res.json(docs);
-   })
- });
+  //同时插入多条
+    app.get('/api/mutipleblogs', function(req, res) {
+       // use mongoose to get all todos in the database
 
- //以下是用于测试passport
- app.get('/ppt', (req, res) => {
-     let sess = req.session;
-     sess.other = 'something else';
-     console.log(`session id is: ${sess.id}`)
-     console.log(JSON.stringify(sess));
-     res.json(sess);
- });
+       BlogModel.insertMany([
+        {title: "mongoose1", author: "L"},
+        {title: "mongoose2", author: "L"}
+        ], function(err, docs){
+            if(err) console.log(err);
+            console.log('保存成功：' + docs);
+          });
+
+       BlogModel.find(function(err, blog) {
+       // if there is an error retrieving, send the error otherwise send data
+       if (err){
+         res.send(err)
+       } else {
+         res.json(blog);
+       }
+       });
+      });
+
+  //查
+  app.get('/api/findblogs', function(req, res) {
+     // use mongoose to get all todos in the database
+
+     BlogModel.find({title: "Mongoose", 'meta.votes': 100}, {title: 1, 'meta.favs': 1, 'comments.body': 1}, function(err, docs){
+        if(err) console.log(err);
+        console.log('查询结果：' + docs);
+        res.json(docs);
+      })
+    });
+
+  //查找并只返回第一个查询记录。
+    app.get('/api/findoneblog', function(req, res) {
+       // use mongoose to get all todos in the database
+
+       BlogModel.findOne({title: "Mongoose", 'meta.votes': 100}, {title: 1, 'meta.favs': 1, 'comments.body': 1}, function(err, docs){
+          if(err) console.log(err);
+          console.log('查询结果：' + docs);
+          res.json(docs);
+        })
+      });
+
+  //查找并只返回第一个查询记录。
+  // app.get('/api/findoneblog', function(req, res) {
+  //    // use mongoose to get all todos in the database
+  //
+  //    BlogModel.findById(id, function(err, docs){
+  //       if(err) console.log(err);
+  //       console.log('查询结果：' + docs);
+  //       res.json(docs);
+  //     })
+  //   });
+
+  //更新原来词条
+  app.get('/api/updateblog', function(req, res) {
+    BlogModel.update({title: "Mongoose"}, {author: "L"}, {multi: true}, function(err, docs){
+        if(err) console.log(err);
+        console.log('更改成功：' + docs);
+        res.json(docs);
+    })
+  });
+
+
+  //删除o开头的title的词条
+  app.get('/api/deleteblog', function(req, res) {
+    BlogModel.remove({title: /^o/}, function(err, docs){
+        if(err) console.log(err);
+        console.log('更改成功：' + docs);
+        res.json(docs);
+    })
+  });
+
+  //以下是用于测试passport
+  app.get('/ppt', (req, res) => {
+      let sess = req.session;
+      sess.other = 'something else';
+      console.log(`session id is: ${sess.id}`)
+      console.log(JSON.stringify(sess));
+      res.json(sess);
+  });
 
 
  app.listen(port);
