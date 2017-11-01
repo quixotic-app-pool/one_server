@@ -5,7 +5,7 @@
  * @Project: one_server
  * @Filename: Route.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-11-01T11:47:05+08:00
+ * @Last modified time: 2017-11-01T12:06:14+08:00
  */
  var express = require('express');
  var router = express.Router();
@@ -27,12 +27,6 @@ router.use(function timeLog(req, res, next) {
   next();
 });
 
-//normal actions
-//ads
-router.post('api/ads', userCtrl.fetchads);
-//user
-router.post('api/screenuser', userCtrl.screenuser);
-
 // //section
 // router.post('api/requestnewsection', sectionCtrl.requestnewsection);
 //
@@ -48,68 +42,47 @@ router.post('api/screenuser', userCtrl.screenuser);
 router.get('api/notification', notificationCtrl.notification);
 router.post('api/updnotification', notificationCtrl.updnotification);
 
+//user
+router.post('api/screenuser', userCtrl.screenuser);
+
+//ads
+router.post('api/ads', userCtrl.fetchads);
+
 //comment
 router.post('api/addcomment', commentCtrl.addcomment);
-
 router.post('api/delcomment', commentCtrl.delcomment);
-
 router.post('api/repcomment', commentCtrl.repcomment);
-
 router.post('api/updcommentlike', commentCtrl.updcommentlike);
 
 //blog
 router.get('api/list', blogCtrl.fetchlist);
-
 router.get('api/blogdetail', blogCtrl.blogdetail);
-
 router.get('api/userbloglist', blogCtrl.userbloglist);
-
 router.post('api/newblog', blogCtrl.newblog);
-
 router.post('api/delblog', blogCtrl.delblog);
-
 router.post('api/repblog', blogCtrl.repblog);
-
 router.post('api/updbloglike', blogCtrl.updbloglike);
 
-//admin action
 //admin
 router.post('api/admin/delcommentbyadmin', adminCtrl.delcommentbyadmin);
-
 router.post('api/admin/delblogbyadmin', adminCtrl.delblogbyadmin);
-
 router.post('api/admin/banuser', adminCtrl.banuser);
-
 router.post('api/admin/freeuser', adminCtrl.freeuser);
-
 router.get('api/admin/userbanbyadmin', adminCtrl.userbanbyadmin);
-
 router.get('api/admin/comntdelbyadmin', adminCtrl.comntdelbyadmin);
-
 router.get('api/admin/blogdelbymadmin', adminCtrl.blogdelbyadmin);
-
 router.get('api/admin/unrepblog', adminCtrl.unrepblog);
-
 router.get('api/admin/unrepcomnt', adminCtrl.unrepcomnt);
-
 
 //superadmin
 router.get('api/super/comntdelbyalladmin', superAdminCtrl.comntdelbyalladmin);
-
 router.get('api/super/blogdelbyalladmin', superAdminCtrl.blogdelbyalladmin);
-
 router.get('api/super/banuserbyalladmin', superAdminCtrl.banuserbyalladmin);
-
-router.post('api/admin/cfdelcomnt', superAdminCtrl.cfdelcomnt);
-
-router.post('api/admin/recovercomnt', superAdminCtrl.recovercomnt);
-
+router.post('api/super/cfdelcomnt', superAdminCtrl.cfdelcomnt);
+router.post('api/super/recovercomnt', superAdminCtrl.recovercomnt);
 router.post('api/super/cfdelblog', superAdminCtrl.cfdelblog);
-
 router.post('api/super/recoverblog', superAdminCtrl.recoverblog);
-
 router.post('api/super/assignadmin', superAdminCtrl.assignadmin);
-
 router.post('api/super/removeadmin', superAdminCtrl.removeadmin);
 
 module.exports = router;
