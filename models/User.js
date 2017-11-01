@@ -5,7 +5,7 @@
  * @Project: one_server
  * @Filename: User.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-10-27T16:17:40+08:00
+ * @Last modified time: 2017-11-01T09:44:24+08:00
  */
 
 
@@ -20,6 +20,7 @@
      avatar: String,
      blogs: [{ type: ObjectId, ref: 'blogs' }],
      commentToOthers: [{ type: ObjectId, ref: 'comments' }],
-     notification: [{ type: ObjectId, ref: 'notifications' }]
+     notification: [{ type: ObjectId, ref: 'notifications' }],
+     screenUser: [ { type: ObjectId, ref: 'user' } ]
  })
  module.exports = mongoose.model('User', userSchema);

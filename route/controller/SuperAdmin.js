@@ -5,9 +5,37 @@
  * @Project: one_server
  * @Filename: SuperAdmin.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-10-27T18:01:09+08:00
+ * @Last modified time: 2017-11-01T11:47:31+08:00
  */
  var UserModel = require("../../models/User")
+
+ function comntdelbyalladmin(req, res) {
+   // TODO:
+ }
+
+ function blogdelbyalladmin(req, res) {
+   // TODO:
+ }
+
+ function banuserbyalladmin(req, res) {
+   // TODO:
+ }
+
+ function cfdelcomnt(req, res) {
+   // TODO:
+ }
+
+ function recovercomnt(req, res) {
+   // TODO:
+ }
+
+ function cfdelblog(req, res) {
+   // TODO:
+ }
+
+ function recoverblog(req, res) {
+   // TODO:
+ }
 
  function updateadmin(req, res) {
    var data = req.body;
@@ -25,8 +53,22 @@
    })
  }
 
+ function removeAdmin(req, res) {
+   // TODO:
+ }
+
+ function comntdelbyadmin(req, res) {
+   // TODO:
+ }
 
  module.exports = {
+   comntdelbyalladmin,
+   blogdelbyalladmin,
+   banuserbyalladmin,
+   cfdelcomnt,
+   recovercomnt,
+   cfdelblog,
+   recoverblog,
    assignadmin,
    removeAdmin
  }

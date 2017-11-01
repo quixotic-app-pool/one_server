@@ -5,7 +5,7 @@
  * @Project: one_server
  * @Filename: Admin.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-10-27T17:05:52+08:00
+ * @Last modified time: 2017-11-01T11:43:38+08:00
  */
  var CommentModel = require('../models/Comment');
  var BlogModel = require('../models/Blog');
@@ -72,6 +72,19 @@
    }
  }
 
+ function userbanbyadmin(req, res) {
+   // TODO:
+ }
+
+ function comntdelbyadmin(req, res) {
+   // TODO:
+ }
+
+ function blogdelbyadmin(req, res) {
+   // TODO:
+ }
+
+
  function unrepblog(req, res) {
    var data = req.body;
    BlogModel.findOneAndUpdate({_id: ObjectId(ata.blogId)}, {isReported: false}, {
@@ -83,10 +96,25 @@
    })
  }
 
+ function unrepcmnt(req, res) {
+   var data = req.body;
+   CommentModel.findOneAndUpdate({_id: ObjectId(ata.blogId)}, {isReported: false}, {
+     if (err){
+       res.send("Sorry, this operation failed, please try again.")
+     } else {
+       res.send('Great, this comment has been unreported.')
+     }
+   })
+ }
+
  module.exports = {
    delcommentbyadmin,
    delblogbyadmin,
    banuser,
    freeuser,
-   unrepblog
+   userbanbyadmin,
+   comntdelbyadmin,
+   blogdelbyadmin,
+   unrepblog,
+   unrepcmnt
  }

@@ -5,7 +5,7 @@
  * @Project: one_server
  * @Filename: Comment.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-10-27T17:31:21+08:00
+ * @Last modified time: 2017-11-01T11:33:27+08:00
  */
 var CommentModel = require("../../models/Comment")
 
@@ -57,8 +57,13 @@ var CommentModel = require("../../models/Comment")
    })
  }
 
+ function repcomment(req, res) {
+   // TODO: 
+ }
+
  module.exports = {
    addcomment,
    delcomment,
-   updcommentlike
+   updcommentlike,
+   repcomment
  }
