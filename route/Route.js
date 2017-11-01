@@ -5,7 +5,7 @@
  * @Project: one_server
  * @Filename: Route.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-11-01T12:06:14+08:00
+ * @Last modified time: 2017-11-01T12:30:27+08:00
  */
  var express = require('express');
  var router = express.Router();
@@ -29,12 +29,9 @@ router.use(function timeLog(req, res, next) {
 
 // //section
 // router.post('api/requestnewsection', sectionCtrl.requestnewsection);
-//
 // router.get('api/sections', sectionCtrl.sections);
-//
 // //concept
 // router.get('api/concepts', conceptCtrl.concepts);
-//
 // //feedback
 // router.post('api/feedback', feedbackCtrl.feedback);
 
@@ -70,18 +67,19 @@ router.post('api/admin/banuser', adminCtrl.banuser);
 router.post('api/admin/freeuser', adminCtrl.freeuser);
 router.get('api/admin/userbanbyadmin', adminCtrl.userbanbyadmin);
 router.get('api/admin/comntdelbyadmin', adminCtrl.comntdelbyadmin);
+router.post('api/admin/recovercomnt', adminCtrl.recovercomnt);
 router.get('api/admin/blogdelbymadmin', adminCtrl.blogdelbyadmin);
+router.post('api/admin/recoverblog', adminCtrl.recoverblog);
 router.get('api/admin/unrepblog', adminCtrl.unrepblog);
 router.get('api/admin/unrepcomnt', adminCtrl.unrepcomnt);
 
 //superadmin
+router.get('api/super/fetechalladmin', superAdminCtrl.fetechalladmin);
 router.get('api/super/comntdelbyalladmin', superAdminCtrl.comntdelbyalladmin);
 router.get('api/super/blogdelbyalladmin', superAdminCtrl.blogdelbyalladmin);
 router.get('api/super/banuserbyalladmin', superAdminCtrl.banuserbyalladmin);
 router.post('api/super/cfdelcomnt', superAdminCtrl.cfdelcomnt);
-router.post('api/super/recovercomnt', superAdminCtrl.recovercomnt);
 router.post('api/super/cfdelblog', superAdminCtrl.cfdelblog);
-router.post('api/super/recoverblog', superAdminCtrl.recoverblog);
 router.post('api/super/assignadmin', superAdminCtrl.assignadmin);
 router.post('api/super/removeadmin', superAdminCtrl.removeadmin);
 

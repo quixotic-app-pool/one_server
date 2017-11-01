@@ -5,7 +5,7 @@
  * @Project: one_server
  * @Filename: Admin.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-11-01T11:43:38+08:00
+ * @Last modified time: 2017-11-01T12:26:37+08:00
  */
  var CommentModel = require('../models/Comment');
  var BlogModel = require('../models/Blog');
@@ -107,6 +107,14 @@
    })
  }
 
+ function recovercomnt(req, res) {
+   // TODO:
+ }
+
+  function recoverblog(req, res) {
+    // TODO:
+  }
+
  module.exports = {
    delcommentbyadmin,
    delblogbyadmin,
@@ -116,5 +124,7 @@
    comntdelbyadmin,
    blogdelbyadmin,
    unrepblog,
-   unrepcmnt
+   unrepcmnt,
+   recovercomnt,
+   recoverblog
  }
