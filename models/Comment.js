@@ -5,28 +5,25 @@
  * @Project: one_server
  * @Filename: Comment.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-10-27T16:15:04+08:00
+ * @Last modified time: 2017-11-16T09:45:34+08:00
  */
  var mongoose = require('mongoose');
  var Schema = mongoose.Schema;
+ const ObjectId = mongoose.Schema.Types.ObjectId
 
  var commentSchema = new Schema({
-     from_uid: { type: ObjectId, ref: 'users' },
-     to_uid: { type: ObjectId, ref: 'users' },
-     anonymous: { type: Boolean, default: true },
+     blog_id:  { type: ObjectId, ref: 'blog' },
+     from_uid: { type: ObjectId, ref: 'user' },
+     to_comment_id: { type: ObjectId, ref: 'comment' },
      meta: {
-       likeNum: { type: Number, default: 0 }
-     },
-     created_info: {
-       time: {
-    		 type   : Date,
-    		 default: Date.now(),
-    	 },
-       device: { type: String, default: null },
-       location: {
-         latitude: { type: Number, default: null },
-         longitude: { type: Number, default: null },
-         locationName: { type: String, default: '' }
+       isanonymous: { type: Boolean, default: true },
+       likeNum: { type: Number, default: 0 },
+       isReported: { type: Boolean, default: false },
+       created_info: {
+         time: {
+      		 type   : Date,
+      		 default: Date.now(),
+      	 }
        }
      }
     })

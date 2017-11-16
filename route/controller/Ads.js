@@ -5,7 +5,7 @@
  * @Project: one_server
  * @Filename: Ads.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-11-01T11:02:06+08:00
+ * @Last modified time: 2017-11-02T15:27:24+08:00
  */
 
  var AdsModel = require("../../models/Ad")
@@ -19,7 +19,6 @@
      }
    })
  }
-
  module.exports = {
    fetchads
  }

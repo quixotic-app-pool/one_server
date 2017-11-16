@@ -5,12 +5,13 @@
  * @Project: one_server
  * @Filename: User.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-11-01T09:44:24+08:00
+ * @Last modified time: 2017-11-16T09:50:42+08:00
  */
 
 
  var mongoose = require('mongoose');
  var Schema = mongoose.Schema;
+ const ObjectId = mongoose.Schema.Types.ObjectId
 
  var userSchema = new Schema({
      isSuperAdmin: { type: Boolean, default: false },

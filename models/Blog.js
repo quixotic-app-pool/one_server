@@ -5,25 +5,23 @@
  * @Project: one_server
  * @Filename: Blog.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-10-27T17:04:34+08:00
+ * @Last modified time: 2017-11-16T16:25:47+08:00
  */
  var mongoose = require('mongoose');
  var Schema = mongoose.Schema;
+ const ObjectId = mongoose.Schema.Types.ObjectId
 
  var blogSchema = new Schema({
-     uid: { type: ObjectId, ref: 'users' },
-     anonymous: { type: Boolean, default: true },
      content: {
        text: String,
-       iamges: [String]
+       images: [String]
      },
-     meta: {
-       likeNum: { type: Number, default: 0 },
-       comment: [{
-         type: ObjectId,
-         ref: 'comments'
-       }]
-     },
+     isanonymous: { type: Boolean, default: true },
+     likeNum: { type: Number, default: 0 },
+     comments: [{
+       type: ObjectId,
+       ref: 'comment'
+     }],
      isReported: { type: Boolean, default: false },
      created_info: {
        time: {

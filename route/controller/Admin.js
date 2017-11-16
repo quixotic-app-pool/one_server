@@ -5,11 +5,11 @@
  * @Project: one_server
  * @Filename: Admin.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-11-01T12:26:37+08:00
+ * @Last modified time: 2017-11-16T09:50:24+08:00
  */
- var CommentModel = require('../models/Comment');
- var BlogModel = require('../models/Blog');
- var UserModel = require('../models/User');
+ var CommentModel = require('../../models/Comment');
+ var BlogModel = require('../../models/Blog');
+ var UserModel = require('../../models/User');
 
 
  function delcommentbyadmin(req, res) {
@@ -87,7 +87,7 @@
 
  function unrepblog(req, res) {
    var data = req.body;
-   BlogModel.findOneAndUpdate({_id: ObjectId(ata.blogId)}, {isReported: false}, {
+   BlogModel.findOneAndUpdate({_id: ObjectId(ata.blogId)}, {isReported: false}, function(err, data) {
      if (err){
        res.send("Sorry, this operation failed, please try again.")
      } else {
@@ -98,7 +98,7 @@
 
  function unrepcmnt(req, res) {
    var data = req.body;
-   CommentModel.findOneAndUpdate({_id: ObjectId(ata.blogId)}, {isReported: false}, {
+   CommentModel.findOneAndUpdate({_id: ObjectId(ata.blogId)}, {isReported: false}, function(err ,data) {
      if (err){
        res.send("Sorry, this operation failed, please try again.")
      } else {

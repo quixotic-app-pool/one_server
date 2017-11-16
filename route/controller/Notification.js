@@ -5,7 +5,7 @@
  * @Project: one_server
  * @Filename: Notification.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-10-27T17:55:11+08:00
+ * @Last modified time: 2017-11-16T09:40:46+08:00
  */
  var NotificationModel = require("../../models/Notification");
 
@@ -25,11 +25,11 @@
 
  function updnotification(req, res) {
    var data = req.body;
-   NotificationModel.findOneAndRemove( { _id: ObjectId(data.comment_id), to_uid: ObjectId(data.to_uid)}, {
+   NotificationModel.findOneAndRemove( { _id: ObjectId(data.comment_id), to_uid: ObjectId(data.to_uid)}, function(err, data){
      if (err){
-       res.send("Sorry, this operation failed, please try again.")
+       res.send("Sorry, this operation failed, please try again.");
      } else {
-       res.send('Great, this notification has been updated.')
+       res.send('Great, this notification has been updated.');
      }
    })
  }

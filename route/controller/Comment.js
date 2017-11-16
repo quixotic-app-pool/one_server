@@ -5,7 +5,7 @@
  * @Project: one_server
  * @Filename: Comment.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-11-01T11:33:27+08:00
+ * @Last modified time: 2017-11-16T09:45:10+08:00
  */
 var CommentModel = require("../../models/Comment")
 
@@ -16,7 +16,6 @@ var CommentModel = require("../../models/Comment")
        to_uid: data.todo_uid,
        anonymous: data.anonymous,
        created_info: data.created_info
-      }
    })
    commentEntity.save(function(err, docs){
        if(err) console.log(err);
@@ -37,7 +36,7 @@ var CommentModel = require("../../models/Comment")
 
  function delcomment(req, res) {
    var data = req.body;
-   CommentModel.findByIdAndRemove( ObjectId(data.commentId), {
+   CommentModel.findByIdAndRemove( ObjectId(data.commentId), function(err, data) {
      if (err){
        res.send("Sorry, this operation failed, please try again.")
      } else {
@@ -48,7 +47,7 @@ var CommentModel = require("../../models/Comment")
 
  function updcommentlike(req, res) {
    var data = req.body;
-   CommentModel.findByIdAndUpdate( ObjectId(data.commentId), { $inc: { "meta.likeNum": data.like }}, {
+   CommentModel.findByIdAndUpdate( ObjectId(data.commentId), { $inc: { "meta.likeNum": data.like }}, function(err, data) {
      if (err){
        res.send("Sorry, this operation failed, please try again.")
      } else {
@@ -58,7 +57,7 @@ var CommentModel = require("../../models/Comment")
  }
 
  function repcomment(req, res) {
-   // TODO: 
+   // TODO:
  }
 
  module.exports = {
