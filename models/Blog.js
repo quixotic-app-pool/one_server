@@ -5,7 +5,7 @@
  * @Project: one_server
  * @Filename: Blog.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-11-16T16:25:47+08:00
+ * @Last modified time: 2017-11-17T11:38:03+08:00
  */
  var mongoose = require('mongoose');
  var Schema = mongoose.Schema;
@@ -16,17 +16,19 @@
        text: String,
        images: [String]
      },
+     user: { uid: { type: ObjectId, default: null}, gender: { type: String, default: 'male' }, avatar: { type: String, default: ''} },
+     category: { type: String, default: ''},
      isanonymous: { type: Boolean, default: true },
      likeNum: { type: Number, default: 0 },
      comments: [{
        type: ObjectId,
-       ref: 'comment'
+       ref: 'Comment'
      }],
      isReported: { type: Boolean, default: false },
      created_info: {
        time: {
-    		 type   : Date,
-    		 default: Date.now(),
+    		 type   : String,
+    		 default: '',
     	 },
        device: { type: String, default: null },
        location: {

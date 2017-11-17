@@ -5,9 +5,12 @@
  * @Project: one_server
  * @Filename: Blog.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-11-16T18:15:16+08:00
+ * @Last modified time: 2017-11-17T12:08:32+08:00
  */
  var CircularJSON = require('circular-json');
+ var dateFormat = require('dateformat');
+ var mongoose = require('mongoose');
+ const ObjectId = mongoose.Types.ObjectId
 
  var BlogModel = require("../../models/Blog");
  var MttModel = require("../../models/Movetotop");
@@ -47,13 +50,20 @@
  }
 
  function blogdetail(req, res) {
-   var data = req.body;
-   BlogModel.findById( ObjectId(data.blogId), function(err, docs){
-     if(err) {
-       res.send("Sorry, this operation failed, please try again.")
-     } else {
-       res.json(blog);
-     }
+   var blogId = req.query.blogId;
+  //  console.log('blogid: ' + CircularJSON.stringify(req))
+
+  //  BlogModel.findById(ObjectId(comment.blog_id)).populate('comments').exec(function(err, data){
+  //    if(err) return err;
+  //    console.log('updatedBlog: ' + data)
+  //    res.send('bingo!')
+  //  })
+  console.log('loading blog detail...')
+
+   BlogModel.findById( ObjectId(blogId) ).populate('comments').exec(function(err, blog){
+     if(err) return err;
+     console.log('populated: ' + blog)
+     res.json(blog)
    })
  }
 
@@ -75,11 +85,14 @@
 
 //create new blog
  function newblog(req, res) {
-   console.log("trying to process new blog from server side...")
+  //  console.log("trying to process new blog from server side...")
+   var now = new Date();
+   now = dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT")
    var data = req.body.pack;
-   var created_info = { device: data.device, location: { latitude: data.latitude || null, longitude: data.longitude || null, locationName: data.locationName || ''}}
+   var created_info = { time: now, device: data.device, location: { latitude: data.latitude || null, longitude: data.longitude || null, locationName: data.locationName || ''}}
    var blogEntity = new BlogModel({
          uid: data.uid,
+         category: data.category,
          anonymous: data.anonymous,
          content: { text: data.content, images: data.images || [] },
          created_info: created_info,
@@ -87,16 +100,17 @@
    })
    blogEntity.save(function(err, docs){
        if(err) console.log(err);
-       console.log('保存成功：' + docs);
+       console.log('blog保存成功：' + docs);
+       res.json(docs)
    })
-   BlogModel.find(function(err, blog) {
-   // if there is an error retrieving, send the error otherwise send data
-       if (err){
-         res.send("Sorry, this operation failed, please try again.")
-       } else {
-         res.json(blog);
-       }
-    })
+  //  BlogModel.find(function(err, blog) {
+  //  // if there is an error retrieving, send the error otherwise send data
+  //      if (err){
+  //        res.send("Sorry, this operation failed, please try again.")
+  //      } else {
+  //        res.json(blog);
+  //      }
+  //   })
   }
 
  function delblog(req, res) {
@@ -123,10 +137,11 @@
 
  function updbloglike(req, res) {
    var data = req.body;
-   BlogModel.findByIdAndUpdate( ObjectId(data.blogId), { $inc: { "meta.likeNum": data.like }}, function(err, data) {
+   BlogModel.findByIdAndUpdate( ObjectId(data.blogId), { $inc: { "likeNum": data.like }}, {new: true}, function(err, data) {
      if (err){
        res.send("Sorry, this operation failed, please try again.")
      } else {
+       console.log('Great, this blog likeNum has been updated.: ' + data)
        res.send('Great, this blog likeNum has been updated.')
      }
    })

@@ -5,12 +5,12 @@
  * @Project: one_server
  * @Filename: Database.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-11-16T09:52:23+08:00
+ * @Last modified time: 2017-11-17T17:48:36+08:00
  */
 
 
  module.exports = {
      // url : 'mongodb://myTester:xyz123@localhost:27017/test'
-     url : 'mongodb://localhost:27017'
+     url : 'mongodb://michael:mao159@localhost:27017/one'
  };
      // url : 'mongodb://localhost:27017'

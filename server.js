@@ -5,7 +5,7 @@
  * @Project: one_server
  * @Filename: server.js
  * @Last modified by:   mymac
- * @Last modified time: 2017-11-16T18:30:29+08:00
+ * @Last modified time: 2017-11-17T18:15:50+08:00
  */
  var express  = require('express');
  var mongoose = require('mongoose');
@@ -21,7 +21,8 @@
  app.use(route);
 
  var port = process.env.PORT || 8080;
- var db = mongoose.connect(database.url);
+ var db = mongoose.connect(database.url)
+
 
  //数据库连接状态
  db.connection.on("error", function (error) {
